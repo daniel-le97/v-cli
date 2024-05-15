@@ -3,6 +3,7 @@ module main
 import os
 import cli
 import commands
+
 fn main() {
 	mut app := cli.Command{
 		name: 'main'
