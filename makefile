@@ -13,7 +13,7 @@ mkdirs:
 	cd $(MODS_DIR)/2 && bun init --yes
 
 run:
-	v run src node
+	v run main.v node
 
 # Clean up
 clean:

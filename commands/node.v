@@ -1,19 +1,8 @@
-module main
-
-import os
+module commands
 import cli
+import os
 import arrays
-
-fn main() {
-	mut app := cli.Command{
-		name: 'main'
-		description: 'cli for common task utils for my system'
-		execute: fn (cmd cli.Command) ! {
-			cmd.execute_help()
-			return
-		}
-		commands: [
-			cli.Command{
+pub const node := cli.Command{
 				name: 'node'
 				description: 'Removes all node_modules from a cwd or specified paths'
 				flags: [
@@ -53,9 +42,4 @@ fn main() {
 					}
 					return
 				}
-			},
-		]
-	}
-	app.setup()
-	app.parse(os.args)
-}
+			}
