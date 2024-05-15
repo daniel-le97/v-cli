@@ -7,7 +7,7 @@ import arrays
 fn main() {
 	mut app := cli.Command{
 		name: 'main'
-		description: 'A simple tool to remove node_modules from a directory'
+		description: 'cli for common task utils for my system'
 		execute: fn (cmd cli.Command) ! {
 			cmd.execute_help()
 			return
