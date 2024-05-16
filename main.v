@@ -13,6 +13,7 @@ fn main() {
 			return
 		}
 		commands: [
+			commands.v_server
 			commands.node
 		]
 	}
