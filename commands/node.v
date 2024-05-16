@@ -39,8 +39,8 @@ pub const node = cli.Command{
 			return
 		}
 		for file in files {
-			println('removing: ' + file)
 			if os.is_dir(file) {
+				println('removing: ' + file)
 				os.rmdir_all(file) or { println('Failed to remove: ' + file) }
 			}
 		}

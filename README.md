@@ -1,5 +1,8 @@
 a command line interface for common utilities built with v
 
+no external deps are used
+
+builds to 800kb
 
 ```
 Usage: cli [flags] [commands]
