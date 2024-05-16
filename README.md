@@ -14,7 +14,7 @@ Flags:
   -man                Prints the auto-generated manpage.
 
 Commands:
-  server              Removes all node_modules from a cwd or specified paths
+  server              starts a static web server on port 8080 with specified path or cwd
   node                Removes all node_modules from a cwd or specified paths
   help                Prints help information.
   man                 Prints the auto-generated manpage.

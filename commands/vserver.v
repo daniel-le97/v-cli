@@ -16,7 +16,7 @@ pub struct App {
 
 pub const v_server = cli.Command{
 	name: 'server'
-	description: 'Removes all node_modules from a cwd or specified paths'
+	description: 'starts a static web server on port 8080 with specified path or cwd'
 	flags: [
 		cli.Flag{
 			name: 'path'
@@ -24,6 +24,7 @@ pub const v_server = cli.Command{
 			flag: cli.FlagType.string
 			description: 'specify paths to search for static files'
 			default_value: [os.getwd()]
+			
 		},
 	]
 	post_execute: fn (cmd cli.Command) ! {
