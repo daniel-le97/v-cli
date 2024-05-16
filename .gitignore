@@ -7,6 +7,9 @@ cli
 *.dylib
 *.dll
 
+_docs
+test
+
 # Ignore binary output folders
 bin/
 

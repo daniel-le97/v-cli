@@ -2,7 +2,7 @@ module commands
 import cli
 import os
 import arrays
-pub const node := cli.Command{
+pub const node = cli.Command{
 				name: 'node'
 				description: 'Removes all node_modules from a cwd or specified paths'
 				flags: [
