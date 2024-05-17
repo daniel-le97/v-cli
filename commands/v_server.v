@@ -13,7 +13,6 @@ pub struct App {
 	veb.Middleware[Context]
 }
 
-
 pub const v_server = cli.Command{
 	name: 'server'
 	description: 'starts a static web server on port 8080 with specified path or cwd'
@@ -24,7 +23,6 @@ pub const v_server = cli.Command{
 			flag: cli.FlagType.string
 			description: 'specify paths to search for static files'
 			default_value: [os.getwd()]
-			
 		},
 	]
 	post_execute: fn (cmd cli.Command) ! {
@@ -35,10 +33,12 @@ pub const v_server = cli.Command{
 		mut app := &App{}
 		dir := cmd.flags.get_string('path')!
 		app.handle_static(dir, true)!
-		app.use(handler: fn(mut ctx Context) bool {
-			println(ctx.req.method.str() + ' ' + ctx.req.url)
-			return true
-		})
+		app.use(
+			handler: fn (mut ctx Context) bool {
+				println(ctx.req.method.str() + ' ' + ctx.req.url)
+				return true
+			}
+		)
 		veb.run[App, Context](mut app, 8080)
 		return
 	}

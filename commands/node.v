@@ -4,17 +4,19 @@ import cli
 import os
 import arrays
 
+const node_path = cli.Flag{
+	name: 'path'
+	abbrev: 'p'
+	flag: cli.FlagType.string_array
+	description: 'specify paths to search for node_modules'
+	default_value: [os.getwd()]
+}
+
 pub const node = cli.Command{
 	name: 'node'
 	description: 'Removes all node_modules from a cwd or specified paths'
 	flags: [
-		cli.Flag{
-			name: 'path'
-			abbrev: 'p'
-			flag: cli.FlagType.string_array
-			description: 'specify paths to search for node_modules'
-			default_value: [os.getwd()]
-		},
+		node_path,
 	]
 	post_execute: fn (cmd cli.Command) ! {
 		println('Executed: ' + cmd.name)
