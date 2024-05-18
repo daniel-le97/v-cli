@@ -33,6 +33,7 @@ pub const v_server = cli.Command{
 		mut app := &VApp{}
 		dir := cmd.flags.get_string('path')!
 		app.handle_static(dir, true)!
+		// simple middleware to log requests method and url
 		app.use(
 			handler: fn (mut ctx Context) bool {
 				println(ctx.req.method.str() + ' ' + ctx.req.url)

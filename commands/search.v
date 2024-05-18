@@ -3,6 +3,7 @@ module commands
 import cli
 import os
 import time
+import utils
 // import arrays
 
 const sw = time.new_stopwatch()
@@ -21,7 +22,7 @@ pub const search = cli.Command{
 		search_path,
 	]
 	post_execute: fn (cmd cli.Command) ! {
-		println('Executed: ' + cmd.name)
+		println('Executed: ${cmd.name} in ${utils.elapsed()}')
 	}
 	execute: fn (cmd cli.Command) ! {
 		dir := cmd.flags.get_strings('path')!

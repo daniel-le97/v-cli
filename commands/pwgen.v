@@ -1,10 +1,10 @@
-
-
 module commands
 
 import cli
 import rand
 import clipboard
+import utils { elapsed }
+// import time
 
 // Define the characters to use in the password
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
@@ -41,13 +41,13 @@ pub const pwgen = cli.Command{
 	name: 'pwgen'
 	description: 'generate a random password'
 	flags: [length_flag, specials_flag]
+	pre_execute: fn (cmd cli.Command) ! {}
 	post_execute: fn (cmd cli.Command) ! {
-		println('Executed: ' + cmd.name)
+		println('Executed: ${cmd.name} in ${elapsed()}')
 		// println(cmd.flags)
 	}
 	execute: fn (cmd cli.Command) ! {
 		mut usable_characters := []string{}
-		mut pw_characters := []string{}
 
 		for letter in letters {
 			usable_characters << letter
@@ -59,6 +59,7 @@ pub const pwgen = cli.Command{
 
 		leng := cmd.flags.get_int('length')!
 		spec := cmd.flags.get_bool('specials')!
+		mut pw_characters := []string{}
 		if spec {
 			for special in special_chars {
 				usable_characters << special
@@ -66,9 +67,13 @@ pub const pwgen = cli.Command{
 		}
 
 		for i := 0; i < leng; i++ {
-			pw_characters << rand.element(usable_characters)!
+			pw_characters << rand.element(usable_characters) or {
+				println('Error generating password')
+				return
+			}
 		}
 		mut c := clipboard.new()
+
 		password := pw_characters.join('')
 		println('Generated password: ')
 		println(password)

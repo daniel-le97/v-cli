@@ -18,8 +18,12 @@ run:
 fmt:
 	v fmt . -w
 
+symlink:
+	sudo ln -s "$(pwd)/main" /usr/local/bin/mycli
+
 build:
-	time v main.v -prod
+	time v . -prod
+	sudo mv cli /usr/local/bin/
 
 # Clean up
 clean:
