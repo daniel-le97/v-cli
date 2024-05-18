@@ -2,8 +2,10 @@ module commands
 
 import cli
 import os
+import time
 // import arrays
 
+const sw = time.new_stopwatch()
 const search_path = cli.Flag{
 	name: 'path'
 	abbrev: 'p'

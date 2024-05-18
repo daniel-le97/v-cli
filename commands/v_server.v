@@ -8,7 +8,7 @@ pub struct Context {
 	veb.Context
 }
 
-pub struct App {
+pub struct VApp {
 	veb.StaticHandler
 	veb.Middleware[Context]
 }
@@ -30,7 +30,7 @@ pub const v_server = cli.Command{
 		// println(cmd.flags)
 	}
 	execute: fn (cmd cli.Command) ! {
-		mut app := &App{}
+		mut app := &VApp{}
 		dir := cmd.flags.get_string('path')!
 		app.handle_static(dir, true)!
 		app.use(
@@ -39,7 +39,7 @@ pub const v_server = cli.Command{
 				return true
 			}
 		)
-		veb.run[App, Context](mut app, 8080)
+		veb.run[VApp, Context](mut app, 8080)
 		return
 	}
 }

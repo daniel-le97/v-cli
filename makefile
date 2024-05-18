@@ -13,7 +13,13 @@ mkdirs:
 	cd $(MODS_DIR)/2 && bun init --yes
 
 run:
-	v crun main.v node
+	v crun main.v
+
+fmt:
+	v fmt . -w
+
+build:
+	time v main.v -prod
 
 # Clean up
 clean:

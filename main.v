@@ -13,15 +13,14 @@ fn main() {
 			cmd.execute_help()
 		}
 		pre_execute: fn (cmd cli.Command) ! {
-			// something you want to run before the main command is executed
 		}
 		post_execute: fn (cmd cli.Command) ! {
-			// something you want to run after the main command is executed
 		}
 		commands: [
 			commands.v_server,
 			commands.node,
 			commands.search,
+			commands.editor,
 		]
 	}
 	app.setup()
