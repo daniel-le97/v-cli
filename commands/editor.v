@@ -12,6 +12,8 @@ import encoding.utf8
 import encoding.utf8.east_asian
 import cli
 
+
+
 // import arrays
 
 const rune_digits = [`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`]
@@ -58,7 +60,7 @@ pub:
 	cursor Cursor
 }
 
-struct App {
+struct Editor_App {
 mut:
 	tui           &tui.Context = unsafe { nil }
 	ed            &Buffer      = unsafe { nil }
@@ -71,12 +73,12 @@ mut:
 	viewport      int
 }
 
-fn (mut a App) set_status(msg string, duration_ms int) {
+fn (mut a Editor_App) set_status(msg string, duration_ms int) {
 	a.status = msg
 	a.t = duration_ms
 }
 
-fn (mut a App) save() {
+fn (mut a Editor_App) save() {
 	if a.cfile().len > 0 {
 		b := a.ed
 		os.write_file(a.cfile(), b.raw()) or { panic(err) }
@@ -86,7 +88,7 @@ fn (mut a App) save() {
 	}
 }
 
-fn (mut a App) cfile() string {
+fn (mut a Editor_App) cfile() string {
 	if a.files.len == 0 {
 		return ''
 	}
@@ -96,7 +98,7 @@ fn (mut a App) cfile() string {
 	return a.files[a.current_file]
 }
 
-fn (mut a App) visit_prev_file() {
+fn (mut a Editor_App) visit_prev_file() {
 	if a.files.len == 0 {
 		a.current_file = 0
 	} else {
@@ -105,7 +107,7 @@ fn (mut a App) visit_prev_file() {
 	a.init_file()
 }
 
-fn (mut a App) visit_next_file() {
+fn (mut a Editor_App) visit_next_file() {
 	if a.files.len == 0 {
 		a.current_file = 0
 	} else {
@@ -114,7 +116,7 @@ fn (mut a App) visit_next_file() {
 	a.init_file()
 }
 
-fn (mut a App) footer() {
+fn (mut a Editor_App) footer() {
 	w, h := a.tui.window_width, a.tui.window_height
 	mut b := a.ed
 	// flat := b.flat()
@@ -475,12 +477,12 @@ fn (c Cursor) xy() (int, int) {
 	return c.pos_x, c.pos_y
 }
 
-// App callbacks
-fn init(mut app App) {
+// Editor_App callbacks
+fn init(mut app Editor_App) {
 	app.init_file()
 }
 
-fn (mut a App) init_file() {
+fn (mut a Editor_App) init_file() {
 	a.ed = &Buffer{}
 	mut init_y := 0
 	mut init_x := 0
@@ -510,12 +512,12 @@ fn (mut a App) init_file() {
 	}
 }
 
-fn (a &App) view_height() int {
+fn (a &Editor_App) view_height() int {
 	return a.tui.window_height - a.footer_height - 1
 }
 
 // magnet_cursor_x will place the cursor as close to it's last move left or right as possible
-fn (mut a App) magnet_cursor_x() {
+fn (mut a Editor_App) magnet_cursor_x() {
 	mut buffer := a.ed
 	if buffer.cursor.pos_x < a.magnet_x {
 		if a.magnet_x < buffer.cur_line().runes().len {
@@ -525,7 +527,7 @@ fn (mut a App) magnet_cursor_x() {
 	}
 }
 
-fn frame(mut a App) {
+fn frame(mut a Editor_App) {
 	mut ed := a.ed
 	a.tui.clear()
 	scroll_limit := a.view_height()
@@ -552,7 +554,7 @@ fn frame(mut a App) {
 	a.tui.flush()
 }
 
-fn event(e &tui.Event, mut a App) {
+fn event(e &tui.Event, mut a Editor_App) {
 	mut buffer := a.ed
 	if e.typ == .key_down {
 		match e.code {
@@ -680,7 +682,7 @@ pub const editor = cli.Command{
 			}
 		}
 
-		mut a := &App{
+		mut a := &Editor_App{
 			files: files
 		}
 		a.tui = tui.init(

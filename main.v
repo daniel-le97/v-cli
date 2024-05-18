@@ -3,6 +3,7 @@ module main
 import os
 import cli
 import commands
+// import server
 
 fn main() {
 	mut app := cli.Command{
@@ -21,6 +22,7 @@ fn main() {
 			commands.node,
 			commands.search,
 			commands.editor,
+			commands.pwgen
 		]
 	}
 	app.setup()

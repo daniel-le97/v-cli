@@ -24,3 +24,6 @@ build:
 # Clean up
 clean:
 	rm -rf $(MODS_DIR)
+
+bombardier:
+	bombardier -c 125 -n 10000000 http://localhost:8089

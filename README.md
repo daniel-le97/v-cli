@@ -18,6 +18,7 @@ Commands:
   node                Removes all node_modules from a cwd or specified paths
   search              searches for strings in specified paths
   editor              basic terminal text editor
+  pwgen               generate a random password
   help                Prints help information.
   man                 Prints the auto-generated manpage.
 ```
