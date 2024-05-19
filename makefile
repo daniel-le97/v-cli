@@ -23,7 +23,7 @@ symlink:
 
 build:
 	time v . -prod
-	sudo mv cli /usr/local/bin/
+	sudo cp cli /usr/local/bin/
 
 # Clean up
 clean:
