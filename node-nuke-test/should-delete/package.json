@@ -1,5 +1,5 @@
 {
-  "name": "2",
+  "name": "should-delete",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {

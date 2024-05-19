@@ -5,7 +5,6 @@ import commands
 import cli
 import os
 
-
 // import server
 
 fn main() {
@@ -29,6 +28,8 @@ fn main() {
 			commands.pwgen,
 		]
 	}
+
 	app.setup()
+
 	app.parse(os.args)
 }

@@ -3,11 +3,20 @@ module commands
 import cli
 import os
 import arrays
+import utils { elapsed }
 
 pub fn new_counter() fn () int {
 	mut i := 0
 	return fn [mut i] () int {
 		i++
+		return i
+	}
+}
+
+pub fn new_array() fn (s string) []string {
+	mut i := []string{}
+	return fn [mut i] (s string) []string {
+		i << s
 		return i
 	}
 }
@@ -27,7 +36,7 @@ pub const node = cli.Command{
 		node_path,
 	]
 	post_execute: fn (cmd cli.Command) ! {
-		println('Executed: ' + cmd.name)
+		println('Executed: ${cmd.name} in ${elapsed()}')
 		// println(cmd.flags)
 	}
 	execute: fn (cmd cli.Command) ! {
@@ -35,11 +44,16 @@ pub const node = cli.Command{
 		mut files_arr := []string{}
 		mut files_ref := &files_arr
 		c := new_counter()
+		restricted := ['Library', '.app', '/.']
+		println(restricted)
 		println('Checking ${dir} for node_modules')
-		os.walk(dir, fn [mut files_ref, c] (filename string) {
+		os.walk(dir, fn [mut files_ref, c, restricted] (filename string) {
 			c()
-			if filename.contains('Library') {
-				return
+			for rest in restricted {
+				if filename.contains(rest) {
+					println('restricted ${filename}')
+					return
+				}
 			}
 			if filename.contains('node_modules') {
 				realname := filename.before('node_modules') + 'node_modules'
@@ -53,6 +67,7 @@ pub const node = cli.Command{
 			println('No node_modules found')
 			return
 		}
+		println('found ${files.len} folders to delete')
 		for file in files {
 			if os.is_dir(file) {
 				println('removing: ' + file)
