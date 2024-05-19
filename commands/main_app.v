@@ -2,6 +2,11 @@ module commands
 
 import cli
 import utils
+import time
+
+
+
+const timer = time.new_stopwatch()
 
 pub const main_app = cli.Command{
 	name: 'cli'
