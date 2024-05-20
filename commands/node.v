@@ -3,26 +3,7 @@ module commands
 import cli
 import os
 import arrays
-import utils { elapsed }
-
-pub fn new_counter() fn () int {
-	mut i := 0
-	return fn [mut i] () int {
-		i++
-		return i
-	}
-}
-
-pub fn new_array() fn (s string) []string {
-	mut i := []string{}
-	return fn [mut i] (s string) []string {
-		if s == '' {
-			return i
-		}
-		i << s
-		return i
-	}
-}
+import utils
 
 const node_path = cli.Flag{
 	name: 'path'
@@ -39,14 +20,14 @@ pub const node = cli.Command{
 		node_path,
 	]
 	post_execute: fn (cmd cli.Command) ! {
-		println('Executed: ${cmd.name} in ${elapsed()}')
+		println('Executed: ${cmd.name} in ${utils.elapsed()}')
 		// println(cmd.flags)
 	}
 	execute: fn (cmd cli.Command) ! {
 		dir := cmd.flags.get_string('path')!
 
-		c := new_counter()
-		push := new_array()
+		c := utils.new_counter()
+		push := utils.new_array()
 		restricted := ['Library', '.app', '/.']
 		println(restricted)
 		println('Checking ${dir} for node_modules')
