@@ -13,11 +13,12 @@ const walk_path = cli.Flag{
 	default_value: [os.getwd() + '/']
 }
 
+// walk reads the initial directory and walks all subdirectories for parrallel processing
 pub const walk = cli.Command{
 	name: 'walk'
 	description: 'walks a directory recursively (testing)'
 	flags: [
-		node_path,
+		walk_path,
 	]
 	post_execute: fn (cmd cli.Command) ! {
 		println('Executed: ${cmd.name} in ${utils.elapsed()}')
@@ -25,7 +26,6 @@ pub const walk = cli.Command{
 	}
 	execute: fn (cmd cli.Command) ! {
 		dir := cmd.flags.get_string('path')!
-
 		all_files := utils.new_array()
 
 		mut pp := pool.new_pool_processor(

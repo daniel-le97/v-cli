@@ -1,3 +1,4 @@
+// this in the main entry point for the cli
 module main
 
 import utils
@@ -12,7 +13,7 @@ fn main() {
 		name: 'cli'
 		description: 'cli for common task utils for my system'
 		execute: fn (cmd cli.Command) ! {
-			// if a command is not passed in, execute the help command
+			// if a command is not passed in, execute the help command by default
 			cmd.execute_help()
 		}
 		pre_execute: fn (cmd cli.Command) ! {

@@ -6,5 +6,5 @@ import time
 pub const timer = time.new_stopwatch()
 
 pub fn elapsed() time.Duration {
-	return timer.elapsed()
+	return utils.timer.elapsed()
 }

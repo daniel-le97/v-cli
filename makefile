@@ -1,15 +1,12 @@
 # Set the virtual environment directory
 MODS_DIR = node-nuke-test
 
-
+ARGS = $(filter-out $@,$(MAKECMDGOALS))
 # Activate the virtual environment
 mkdirs:
 	make clean
 	mkdir -p $(MODS_DIR)/should-delete
 	cd $(MODS_DIR)/should-delete && bun init --yes
-
-run:
-	v crun main.v
 
 fmt:
 	v fmt . -w
@@ -19,10 +16,10 @@ symlink:
 
 build:
 	time v . -prod
-	sudo ln -s "$(pwd)/cli" /usr/local/bin/cli
+	sudo cp cli /usr/local/bin/
 
-link:
-	sudo ln -sf /cli /usr/local/bin/
+run:
+	v crun . $(ARGS)
 
 # Clean up
 clean:
@@ -30,3 +27,7 @@ clean:
 
 bombardier:
 	bombardier -c 125 -n 10000000 http://localhost:8089
+
+# Prevent make from trying to use these as file targets
+%:
+	@:
