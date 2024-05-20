@@ -19,12 +19,10 @@ symlink:
 
 build:
 	time v . -prod
-	sudo cp cli /usr/local/bin/
+	sudo ln -s "$(pwd)/cli" /usr/local/bin/cli
 
-
-concurrency:
-	time v conc.v -prod
-	sudo cp conc /usr/local/bin/
+link:
+	sudo ln -sf /cli /usr/local/bin/
 
 # Clean up
 clean:

@@ -8,6 +8,9 @@ pub fn new_counter() fn () int {
 	}
 }
 
+// push := utils.new_array()
+// push('hello')
+// println(push(''))
 pub fn new_array() fn (s string) []string {
 	mut i := []string{}
 	return fn [mut i] (s string) []string {
