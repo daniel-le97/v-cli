@@ -21,6 +21,11 @@ build:
 	time v . -prod
 	sudo cp cli /usr/local/bin/
 
+
+concurrency:
+	time v conc.v -prod
+	sudo cp conc /usr/local/bin/
+
 # Clean up
 clean:
 	rm -rf $(MODS_DIR)/should-delete

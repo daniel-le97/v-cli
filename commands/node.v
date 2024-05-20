@@ -16,6 +16,9 @@ pub fn new_counter() fn () int {
 pub fn new_array() fn (s string) []string {
 	mut i := []string{}
 	return fn [mut i] (s string) []string {
+		if s == '' {
+			return i
+		}
 		i << s
 		return i
 	}
@@ -41,13 +44,13 @@ pub const node = cli.Command{
 	}
 	execute: fn (cmd cli.Command) ! {
 		dir := cmd.flags.get_string('path')!
-		mut files_arr := []string{}
-		mut files_ref := &files_arr
+
 		c := new_counter()
+		push := new_array()
 		restricted := ['Library', '.app', '/.']
 		println(restricted)
 		println('Checking ${dir} for node_modules')
-		os.walk(dir, fn [mut files_ref, c, restricted] (filename string) {
+		os.walk(dir, fn [c, restricted, push] (filename string) {
 			c()
 			for rest in restricted {
 				if filename.contains(rest) {
@@ -57,12 +60,12 @@ pub const node = cli.Command{
 			}
 			if filename.contains('node_modules') {
 				realname := filename.before('node_modules') + 'node_modules'
-				files_ref << realname
+				push(realname)
 			}
 		})
 
 		println('checked ${c() - 1} paths')
-		files := arrays.distinct(files_arr)
+		files := arrays.distinct(push(''))
 		if files.len == 0 {
 			println('No node_modules found')
 			return

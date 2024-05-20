@@ -5,9 +5,11 @@ import commands
 import cli
 import os
 
+
 // import server
 
 fn main() {
+
 	mut app := cli.Command{
 		name: 'cli'
 		description: 'cli for common task utils for my system'
@@ -30,6 +32,6 @@ fn main() {
 	}
 
 	app.setup()
-
+	
 	app.parse(os.args)
 }

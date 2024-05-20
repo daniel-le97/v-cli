@@ -6,6 +6,17 @@ import time
 import utils
 // import arrays
 
+pub fn new_array() fn (s string) []string {
+	mut i := []string{}
+	return fn [mut i] (s string) []string {
+		if s == '' {
+			return i
+		}
+		i << s
+		return i
+	}
+}
+
 const sw = time.new_stopwatch()
 const search_path = cli.Flag{
 	name: 'path'
