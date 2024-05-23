@@ -3,6 +3,7 @@ module commands
 import cli
 import os
 import utils
+import json
 // import sync.pool
 
 const walk_path = cli.Flag{
@@ -25,8 +26,12 @@ pub const walk = cli.Command{
 		// println(cmd.flags)
 	}
 	execute: fn (cmd cli.Command) ! {
+		homedir := os.home_dir()
+		println('Home: ${homedir}')
 		dir := cmd.flags.get_string('path')!
 		files := utils.walker(dir)
-		println('files: ${files.len}')
+		println('Files: ${files.len}')
+		jsoner := json.encode_pretty(files)
+		os.write_file('walk.json', jsoner) or { panic(err) }
 	}
 }

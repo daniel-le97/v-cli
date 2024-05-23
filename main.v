@@ -6,8 +6,6 @@ import commands
 import cli
 import os
 
-// import server
-
 fn main() {
 	mut app := cli.Command{
 		name: 'cli'
@@ -28,6 +26,7 @@ fn main() {
 			commands.editor,
 			commands.pwgen,
 			commands.walk,
+			commands.redis,
 		]
 	}
 

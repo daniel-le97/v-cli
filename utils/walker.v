@@ -4,6 +4,8 @@ import sync.pool
 import os
 
 pub fn walker(p string) []string {
+	// db_path := os.home_dir()
+	// db_exist := os.exists()
 	arr := new_array()
 	mut pp := pool.new_pool_processor(
 		callback: fn [arr] (mut pp pool.PoolProcessor, idx int, wid int) bool {
